@@ -89,7 +89,7 @@ plugins=(
 	z
 	rand-quote
 	themes
-	tmux
+	# tmux
   docker
   docker-compose
   git-open
@@ -178,7 +178,6 @@ prompt_dir(){
   prompt_segment blue black '%c'
 }
 
-source /opt/ros/noetic/setup.zsh
 
 function upsearch()
 { 
@@ -186,21 +185,24 @@ function upsearch()
   test -e "$1" && UPSEARCH_RET="$PWD" && return || builtin cd .. && upsearch $1
 }
 
-function ros_workspace_run()
-{
-  dir_run="$PWD"
-  upsearch devel
-  if [ "$UPSEARCH_RET" != "/" ]; then
-    echo "start from $UPSEARCH_RET"  
-    builtin cd $UPSEARCH_RET
-    $*
-  else
-    echo "start from current path"
-    builtin cd $dir_run
-    $*
-  fi
-  builtin cd $dir_run
-}
+# source /opt/ros/noetic/setup.zsh
+
+# function ros_workspace_run()
+# {
+#   dir_run="$PWD"
+#   upsearch devel
+#   if [ "$UPSEARCH_RET" != "/" ]; then
+#     echo "start from $UPSEARCH_RET"  
+#     builtin cd $UPSEARCH_RET
+#     $*
+#   else
+#     echo "start from current path"
+#     builtin cd $dir_run
+#     $*
+#   fi
+#   builtin cd $dir_run
+# }
+
 export http_proxy="http://127.0.0.1:7890"
 export https_proxy="http://127.0.0.1:7890"
 
@@ -208,11 +210,6 @@ export https_proxy="http://127.0.0.1:7890"
 alias ss="ros_workspace_run source ./devel/setup.zsh"
 alias gz="gedit ~/.zshrc"
 alias sz="source ~/.zshrc"
-alias cb="ros_workspace_run catkin build"
-alias cm="ros_workspace_run catkin_make"
-alias cc="ros_workspace_run catkin clean -y"
-alias ccb="ros_workspace_run catkin clean -y && catkin build"
-alias ccm="ros_workspace_run catkin clean -y && catkin_make"
 alias rg="ranger"
 alias sudo="sudo "
 
@@ -230,7 +227,7 @@ export QT_NO_FT_CACHE=1
 
 
 # added by pipx (https://github.com/pipxproject/pipx)
-export PATH="/home/sti/.local/bin:$PATH"
+export PATH="/home/$USER/.local/bin:$PATH"
 
 # default editor
 export EDITOR=/usr/bin/nvim
@@ -239,5 +236,5 @@ export EDITOR=/usr/bin/nvim
 fpath=(~/.config/zsh/completion/ $fpath)
 autoload -Uz compinit && compinit -i
 # deno.land for nvim markdown
-  export DENO_INSTALL="/home/sti/.deno"
+  export DENO_INSTALL="/home/$USER/.deno"
   export PATH="$DENO_INSTALL/bin:$PATH"
